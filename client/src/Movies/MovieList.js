@@ -21,16 +21,21 @@ const MovieList = props => {
   return (
     <div className="movie-list">
       {movies.map(movie => (
-        <MovieDetails key={movie.id} movie={movie} />
+        <MovieDetails key={movie.id} {...props} movie={movie} />
       ))}
     </div>
   );
 }
 
-function MovieDetails({ movie }) {
-  const { title, director, metascore, stars } = movie;
+function MovieDetails(props) {
+  const { title, director, metascore, stars } = props.movie;
+
+  function routeToMovie() {
+    props.history.push(`/movies/${props.movie.id}`)
+  }
+
   return (
-    <div className="movie-card">
+    <div className="movie-card" onClick={routeToMovie} >
       <h2>{title}</h2>
       <div className="movie-director">
         Director: <em>{director}</em>
@@ -48,5 +53,7 @@ function MovieDetails({ movie }) {
     </div>
   );
 }
+
+
 
 export default MovieList;
